@@ -1,21 +1,29 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class CourseService {
   private storageKey = 'courses';
 
-  // Retrieve courses from localStorage
-  getCourses(): any[] {
-    const courses = localStorage.getItem(this.storageKey);
-    return courses ? JSON.parse(courses) : [];
+  getCourses() {
+    const storedCourses = localStorage.getItem(this.storageKey);
+    return storedCourses ? JSON.parse(storedCourses) : [];
   }
 
-  // Save a new course to localStorage
-  addCourse(course: { courseName: string, instructorName: string, startDate: string, duration: string, description: string }): void {
+  addCourse(course: any) {
     const courses = this.getCourses();
     courses.push(course);
     localStorage.setItem(this.storageKey, JSON.stringify(courses));
+  }
+
+  updateCourses(courses: any[]) {
+    localStorage.setItem(this.storageKey, JSON.stringify(courses));
+  }
+
+  deleteCourse(index: number) {
+    const courses = this.getCourses();
+    courses.splice(index, 1);
+    this.updateCourses(courses);
   }
 }

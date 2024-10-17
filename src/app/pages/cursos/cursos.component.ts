@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
+import { ListCoursesComponent } from '../../list-courses/list-courses.component';
 
 @Component({
   selector: 'app-cursos',
   standalone: true,
-  imports: [],
+  imports: [ListCoursesComponent],
   templateUrl: './cursos.component.html',
-  styleUrl: './cursos.component.css'
+  styleUrls: ['./cursos.component.css']
 })
-export class CursosComponent {
-
-}
+export class CursosComponent {}
