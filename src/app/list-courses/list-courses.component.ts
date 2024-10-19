@@ -1,39 +1,38 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Import CommonModule
-import { CourseService } from '../curso.service';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Course } from '../course.service';
 
 @Component({
   selector: 'app-list-courses',
   standalone: true,
-  imports: [CommonModule],  // Add CommonModule to the imports array
-  templateUrl: './list-courses.component.html',
+  imports: [CommonModule, FormsModule],
+  template: `
+    <ul>
+      <li *ngFor="let course of courses; let i = index">
+        <h3>{{ course.courseName }}</h3>
+        <p>Instructor: {{ course.instructorName }}</p>
+        <p>Start Date: {{ course.startDate }}</p>
+        <p>Duration: {{ course.duration }}</p>
+        <div>
+          <textarea [(ngModel)]="course.description" (blur)="onUpdateDescription(i, course.description)"></textarea>
+        </div>
+        <button (click)="onDeleteCourse(i)">Delete</button>
+      </li>
+    </ul>
+  `,
   styleUrls: ['./list-courses.component.css']
 })
 export class ListCoursesComponent {
-  courses: any[] = [];
+  @Input() courses: Course[] = [];
+  @Output() deleteCourse = new EventEmitter<number>();
+  @Output() updateDescription = new EventEmitter<{ index: number, description: string }>();
 
-  constructor(private courseService: CourseService) {}
-
-
-  ngOnInit() {
-    this.loadCourses();
+  onDeleteCourse(index: number) {
+    this.deleteCourse.emit(index);
   }
 
-  loadCourses() {
-    this.courses = this.courseService.getCourses();
-  }
-
-  deleteCourse(index: number) {
-    this.courseService.deleteCourse(index);
-    this.loadCourses();
-  }
-
-  toggleDetails(index: number) {
-    const details = document.getElementById(`details-${index}`);
-    if (details?.style.display === "none") {
-      details.style.display = "block";
-    } else {
-      details.style.display = "none";
-    }
+  onUpdateDescription(index: number, description: string) {
+    this.updateDescription.emit({ index, description });
   }
 }

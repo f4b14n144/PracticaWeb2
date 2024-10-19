@@ -1,18 +1,19 @@
 <div *ngIf="courses.length === 0">
-    <p>No hay cursos disponibles.</p>
-  </div>
-  
-  <div *ngFor="let course of courses; let i = index">
-    <div class="course-card">
-      <p>{{ course.duration }} semanas</p>
-      <h3>{{ course.courseName }}</h3>
-      <p>Instructor: {{ course.instructorName }}</p>
-      <p>Fecha de inicio: {{ course.startDate }}</p>
-      <button (click)="deleteCourse(i)">Eliminar</button>
-      <button (click)="toggleDetails(i)">Ver más detalles</button>
-      <div class="course-details" id="details-{{ i }}" style="display: none;">
-        <p>{{ course.description }}</p>
-      </div>
+  <p>No hay cursos disponibles.</p>
+</div>
+
+<div *ngFor="let course of courses; let i = index">
+  <div class="course-card">
+    <p>{{ course.duration }} semanas</p>
+    <h3>{{ course.courseName }}</h3>
+    <p>Instructor: {{ course.instructorName }}</p>
+    <p>Fecha de inicio: {{ course.startDate }}</p>
+    <button (click)="deleteCourse(i)">Eliminar</button>
+    <button (click)="toggleDetails(i)">Ver más detalles</button>
+    <div class="course-details" id="details-{{ i }}" style="display: none;">
+      <p>{{ course.description }}</p>
     </div>
   </div>
+</div>
+
   
