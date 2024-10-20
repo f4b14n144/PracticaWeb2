@@ -14,4 +14,10 @@
             <li>Almacenar los datos de manera local utilizando el almacenamiento local del navegador (localStorage).</li>
         </ul>
     </section>
+
+    <section class="cat-fact-section">
+        <h3>Cat Fact of the Day</h3>
+        <p>{{ catFact }}</p>
+        <button (click)="fetchCatFact()">Get New Fact</button>
+    </section>
 </main>
